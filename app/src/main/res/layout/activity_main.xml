@@ -80,6 +80,7 @@
         app:layout_constraintTop_toTopOf="@id/barrier" />
 
     <androidx.constraintlayout.widget.Barrier
+
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="17dp"
-        android:text="10"
+        android:text="@string/amountLikes"
         app:layout_constraintStart_toEndOf="@+id/ivLikes"
         app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
