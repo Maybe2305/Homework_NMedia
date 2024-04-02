@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.CardPostBinding
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
@@ -15,30 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this) { post ->
-            with(binding) {
-                author.text = post.author
-                published.text = post.published
-                content.text = post.content
-
-                amountLikes.text = textNumber(post.amountLikes)
-                amountShares.text = textNumber(post.amountShares)
-                amountWatches.text = textNumber(post.amountWatches)
-
-                ivLikes.setImageResource(
-                    if (post.likedByMe) R.drawable.baseline_favorite_24
-                    else R.drawable.baseline_favorite_border_24
-                )
-
-            }
-        }
-
-        binding.ivLikes.setOnClickListener {
-            viewModel.like()
-        }
-
-        binding.ivShare.setOnClickListener {
-            viewModel.share()
+        val adapter = PostsAdapter(
+            likeListener = { viewModel.likeById(it.id) },
+            shareListener = { viewModel.shareById(it.id) }
+        )
+        binding.list.adapter = adapter
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
         }
     }
 
