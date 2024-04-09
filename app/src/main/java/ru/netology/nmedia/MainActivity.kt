@@ -26,15 +26,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                binding.group.visibility = View.VISIBLE
-                binding.messageBeforeEdited.text = post.content
-                binding.cancelEdit.setOnClickListener {
-                    binding.group.visibility = View.GONE
-                    binding.content.setText("")
-                    binding.content.clearFocus()
-                    AndroidUtils.hideKeyboard(binding.content)
-                }
-                viewModel.edit(post)
+                viewModel.cancelEdit(binding, post)
             }
 
             override fun onRemove(post: Post) {
@@ -76,9 +68,24 @@ class MainActivity : AppCompatActivity() {
             binding.content.clearFocus()
             AndroidUtils.hideKeyboard(binding.content)
         }
+
+        fun cancelEdit(post: Post) {
+            binding.group.visibility = View.VISIBLE
+            binding.messageBeforeEdited.text = post.content
+            binding.cancelEdit.setOnClickListener {
+                binding.group.visibility = View.GONE
+                binding.content.setText("")
+                binding.content.clearFocus()
+                AndroidUtils.hideKeyboard(binding.content)
+                viewModel.editDefault()
+            }
+            viewModel.edit(post)
+        }
     }
 
 }
+
+
 
 fun textNumber(number: Int): String {
     val convertedNumber = when (number) {
