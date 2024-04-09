@@ -35,16 +35,5 @@ class PostViewModel : ViewModel() {
     fun editDefault() {
         edited.value = empty
     }
-    fun cancelEdit(binding: ActivityMainBinding, post: Post) {
-        binding.group.visibility = View.VISIBLE
-        binding.messageBeforeEdited.text = post.content
-        binding.cancelEdit.setOnClickListener {
-            binding.group.visibility = View.GONE
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(binding.content)
-            editDefault()
-        }
-        edit(post)
-    }
+
 }

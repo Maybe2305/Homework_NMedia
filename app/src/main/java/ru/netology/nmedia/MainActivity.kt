@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                viewModel.cancelEdit(binding, post)
+                viewModel.edit(post)
             }
 
             override fun onRemove(post: Post) {
@@ -49,8 +49,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.cancelEdit.setOnClickListener {
+                binding.cancelEdit.setOnClickListener {
+                    binding.group.visibility = View.GONE
+                    binding.content.setText("")
+                    binding.content.clearFocus()
+                    AndroidUtils.hideKeyboard(binding.content)
+                    viewModel.editDefault()
+                }
+        }
+
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
+                binding.group.visibility = View.VISIBLE
+                binding.messageBeforeEdited.text = it.content
                 binding.content.setText(it.content)
                 binding.content.focusAndShowKeyboard()
             }
@@ -69,19 +81,10 @@ class MainActivity : AppCompatActivity() {
             AndroidUtils.hideKeyboard(binding.content)
         }
 
-        fun cancelEdit(post: Post) {
-            binding.group.visibility = View.VISIBLE
-            binding.messageBeforeEdited.text = post.content
-            binding.cancelEdit.setOnClickListener {
-                binding.group.visibility = View.GONE
-                binding.content.setText("")
-                binding.content.clearFocus()
-                AndroidUtils.hideKeyboard(binding.content)
-                viewModel.editDefault()
-            }
-            viewModel.edit(post)
-        }
+
     }
+
+
 
 }
 
