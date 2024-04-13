@@ -18,9 +18,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         val viewModel: PostViewModel by viewModels()
-        val adapter = PostsAdapter( object : OnInteractionListener {
+        val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
@@ -50,13 +49,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cancelEdit.setOnClickListener {
-                binding.cancelEdit.setOnClickListener {
-                    binding.group.visibility = View.GONE
-                    binding.content.setText("")
-                    binding.content.clearFocus()
-                    AndroidUtils.hideKeyboard(binding.content)
-                    viewModel.editDefault()
-                }
+            binding.cancelEdit.setOnClickListener {
+                binding.group.visibility = View.GONE
+                binding.content.setText("")
+                binding.content.clearFocus()
+                AndroidUtils.hideKeyboard(binding.content)
+                viewModel.editDefault()
+            }
         }
 
         viewModel.edited.observe(this) {
@@ -85,9 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
 }
-
 
 
 fun textNumber(number: Int): String {

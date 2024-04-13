@@ -46,15 +46,29 @@
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toBottomOf="@id/author" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/moreVert"
+        style="@style/MoreCheckBox"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:insetLeft="0dp"
+        android:checkable="true"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="24dp"
+        android:minHeight="24dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp"
+        app:icon="@drawable/baseline_more_vert_24"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_more_vert_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -89,48 +103,61 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content" />
 
-    <ImageButton
-        android:background="@android:color/transparent"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/ivLikes"
+        style="@style/LikeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@id/amountLikes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier2"
-        app:srcCompat="@drawable/baseline_favorite_border_24" />
-
-    <TextView
-        android:id="@+id/amountLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="17dp"
+        android:checkable="true"
+        android:contentDescription="like"
+        android:gravity="center_horizontal|center_vertical"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="24dip"
+        android:minHeight="24dip"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
         android:text="@string/amountLikes"
-        app:layout_constraintStart_toEndOf="@+id/ivLikes"
+        app:icon="@drawable/ic_like_24dp"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        app:iconTint="@color/like_checkbox_tint"
+        app:layout_constraintEnd_toStartOf="@id/ivShare"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
-    <ImageButton
+
+
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/ShareCheckBox"
         android:background="@android:color/transparent"
         android:id="@+id/ivShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/amountLikes"
+        android:checkable="true"
+        android:insetBottom="0dp"
+        android:insetLeft="0dp"
+        android:minWidth="24dip"
+        android:minHeight="24dip"
+        android:insetRight="0dp"
+        android:insetTop="0dp"
+        android:padding="0dp"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        android:text="@string/amountShares"
+        app:layout_constraintStart_toEndOf="@id/ivLikes"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
-        app:srcCompat="@drawable/baseline_share_24" />
+        app:icon="@drawable/baseline_share_24" />
 
-    <TextView
-        android:id="@+id/amountShares"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="17dp"
-        android:text="5"
-        app:layout_constraintStart_toEndOf="@id/ivShare"
-        app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
     <TextView
         android:id="@+id/amountWatches"
