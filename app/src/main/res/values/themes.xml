@@ -10,15 +10,35 @@
     <style name="LikeCheckBox"
         parent="Widget.Material3.Button.TextButton.Icon">
         <item name="iconTint">@color/like_checkbox_tint</item>
-        <item name="minWidth">24dp</item>
-        <item name="minHeight">24dp</item>
+        <item name="android:checkable">true</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:minHeight">24dip</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+
     </style>
 
     <style name="ShareCheckBox"
         parent="Widget.Material3.Button.IconButton.Filled.Tonal">
         <item name="iconTint">@color/share_checkbox_tint</item>
-        <item name="minWidth">24dp</item>
-        <item name="minHeight">24dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:checkable">true</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:minHeight">24dip</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:padding">0dp</item>
+
     </style>
 
     <style name="MoreCheckBox"
