@@ -2,8 +2,10 @@ package ru.netology.nmedia
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.EXTRA_TEXT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContract
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.ActivityNewPostBinding
@@ -14,7 +16,7 @@ class NewPostActivity : AppCompatActivity() {
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val url = binding.urlVideo
+
 
 
         binding.save.setOnClickListener {
@@ -35,11 +37,16 @@ class NewPostActivity : AppCompatActivity() {
                 finish()
             }
 
+        val content = intent.getStringExtra(EXTRA_TEXT)
+        if (content != null) {
+            binding.content.setText(content)
+        }
     }
 }
 
-object NewPostContract : ActivityResultContract<Unit, String?>() {
-    override fun createIntent(context: Context, input: Unit) = Intent(context, NewPostActivity::class.java)
+object NewPostContract : ActivityResultContract<String, String?>() {
+    override fun createIntent(context: Context, input: String) =
+        Intent(context, NewPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input)
 
     override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
 

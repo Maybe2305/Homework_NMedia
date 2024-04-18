@@ -30,7 +30,6 @@ class PostsAdapter(
 ) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onInteractionListener)
@@ -55,14 +54,14 @@ class PostViewHolder(
         ivShare.text = textNumber(post.amountShares)
         amountWatches.text = textNumber(post.amountWatches)
 
-
-
-
-
         if (post.videoContent.isNotEmpty()) {
             playVideo.visibility = View.VISIBLE
             contentVideo.visibility = View.VISIBLE
+        } else {
+            playVideo.visibility = View.GONE
+            contentVideo.visibility = View.GONE
         }
+
         ivLikes.isChecked = post.likedByMe
         ivLikes.setOnClickListener {
             onInteractionListener.onLike(post)
@@ -71,8 +70,8 @@ class PostViewHolder(
             onInteractionListener.onShare(post)
         }
         playVideo.setOnClickListener {
-        onInteractionListener.playVideo(post.videoContent)
-    }
+            onInteractionListener.playVideo(post.videoContent)
+        }
         moreVert.setOnClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.options_post)
@@ -84,10 +83,12 @@ class PostViewHolder(
                             true
 
                         }
+
                         R.id.remove -> {
                             onInteractionListener.onRemove(post)
                             true
                         }
+
                         else -> false
                     }
                 }

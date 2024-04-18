@@ -24,9 +24,14 @@ class MainActivity : AppCompatActivity() {
         val viewModel: PostViewModel by viewModels()
 
         val newPostLauncher = registerForActivityResult(NewPostContract) {
-            val result = it ?: return@registerForActivityResult
-            val url = NewPostContract
-            viewModel.changeContentAndSave(result)
+            val result = it
+            if (result != null) {
+                viewModel.changeContentAndSave(result)
+            } else {
+                viewModel.editDefault()
+                return@registerForActivityResult
+            }
+
         }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
@@ -36,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                newPostLauncher.launch(Unit)
+                newPostLauncher.launch(post.content)
             }
 
             override fun onRemove(post: Post) {
@@ -93,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         binding.save.setOnClickListener {
-           newPostLauncher.launch(Unit)
+           newPostLauncher.launch("")
         }
 
 
