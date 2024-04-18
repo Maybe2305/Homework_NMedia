@@ -1,5 +1,6 @@
 package ru.netology.nmedia
 
+import android.net.Uri
 import android.widget.TextView
 
 data class Post(
@@ -11,4 +12,5 @@ data class Post(
     var amountLikes: Int = 999,
     val amountShares: Int = 997,
     val amountWatches: Int = 150000,
+    var videoContent: String,
 )

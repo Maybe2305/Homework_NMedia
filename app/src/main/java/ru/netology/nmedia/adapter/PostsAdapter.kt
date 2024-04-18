@@ -1,12 +1,16 @@
 package ru.netology.nmedia.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.constraintlayout.widget.Group
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nmedia.NewPostContract
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
@@ -17,13 +21,15 @@ interface OnInteractionListener {
     fun onEdit(post: Post)
     fun onRemove(post: Post)
     fun onShare(post: Post)
+    fun playVideo(file: String)
 }
-
 
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -51,6 +57,12 @@ class PostViewHolder(
 
 
 
+
+
+        if (post.videoContent.isNotEmpty()) {
+            playVideo.visibility = View.VISIBLE
+            contentVideo.visibility = View.VISIBLE
+        }
         ivLikes.isChecked = post.likedByMe
         ivLikes.setOnClickListener {
             onInteractionListener.onLike(post)
@@ -58,12 +70,16 @@ class PostViewHolder(
         ivShare.setOnClickListener {
             onInteractionListener.onShare(post)
         }
+        playVideo.setOnClickListener {
+        onInteractionListener.playVideo(post.videoContent)
+    }
         moreVert.setOnClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.options_post)
                 setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.edit -> {
+
                             onInteractionListener.onEdit(post)
                             true
 

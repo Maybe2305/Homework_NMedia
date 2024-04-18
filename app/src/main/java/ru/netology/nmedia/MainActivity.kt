@@ -1,10 +1,13 @@
 package ru.netology.nmedia
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -19,6 +22,13 @@ class MainActivity : AppCompatActivity() {
 
 
         val viewModel: PostViewModel by viewModels()
+
+        val newPostLauncher = registerForActivityResult(NewPostContract) {
+            val result = it ?: return@registerForActivityResult
+            val url = NewPostContract
+            viewModel.changeContentAndSave(result)
+        }
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -26,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+                newPostLauncher.launch(Unit)
             }
 
             override fun onRemove(post: Post) {
@@ -33,7 +44,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onShare(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                }
+                val shareIntent = Intent.createChooser(intent, "Share")
+
+                startActivity(shareIntent)
                 viewModel.shareById(post.id)
+            }
+
+            @SuppressLint("QueryPermissionsNeeded")
+            override fun playVideo(file: String) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(file))
+                startActivity(intent)
             }
 
         }
@@ -48,37 +73,29 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.cancelEdit.setOnClickListener {
-            binding.cancelEdit.setOnClickListener {
-                binding.group.visibility = View.GONE
-                binding.content.setText("")
-                binding.content.clearFocus()
-                AndroidUtils.hideKeyboard(binding.content)
-                viewModel.editDefault()
-            }
-        }
+//        binding.cancelEdit.setOnClickListener {
+//            binding.cancelEdit.setOnClickListener {
+//                binding.group.visibility = View.GONE
+//                binding.content.setText("")
+//                binding.content.clearFocus()
+//                AndroidUtils.hideKeyboard(binding.content)
+//                viewModel.editDefault()
+//            }
+//        }
 
-        viewModel.edited.observe(this) {
-            if (it.id != 0L) {
-                binding.group.visibility = View.VISIBLE
-                binding.messageBeforeEdited.text = it.content
-                binding.content.setText(it.content)
-                binding.content.focusAndShowKeyboard()
-            }
-        }
+//        viewModel.edited.observe(this) {
+//            if (it.id != 0L) {
+//                binding.group.visibility = View.VISIBLE
+//                binding.messageBeforeEdited.text = it.content
+//                binding.content.setText(it.content)
+//                binding.content.focusAndShowKeyboard()
+//            }
+//        }
 
         binding.save.setOnClickListener {
-            val content = binding.content.text.toString()
-            if (content.isBlank()) {
-                Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContentAndSave(content)
-
-            binding.content.setText("")
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(binding.content)
+           newPostLauncher.launch(Unit)
         }
+
 
 
     }

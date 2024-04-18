@@ -90,10 +90,49 @@
         android:includeFontPadding="false"
         android:lineSpacingExtra="5dp"
         android:text="@string/content"
-        app:layout_constraintBottom_toBottomOf="@id/barrier2"
+        app:layout_constraintBottom_toTopOf="@id/contentVideo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier" />
+
+    <ImageView
+        android:id="@+id/contentVideo"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:autoLink="web"
+        android:cropToPadding="false"
+        android:freezesText="false"
+        android:visibility="gone"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="5dp"
+        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:srcCompat="@drawable/netology" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/playVideo"
+        style="@style/LikeCheckBox"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:gravity="center_horizontal|center_vertical"
+        app:icon="@drawable/play_24"
+        android:layout_marginTop="8dp"
+        app:iconGravity="textEnd"
+        app:iconSize="60dp"
+        app:iconTint="#1CDFF8"
+        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+
 
     <androidx.constraintlayout.widget.Barrier
 
@@ -101,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="contentVideo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ivLikes"

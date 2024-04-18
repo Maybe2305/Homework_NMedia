@@ -1,5 +1,6 @@
 package ru.netology.nmedia
 
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -13,6 +14,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             "Знаний хватит на всех: на следующей неделе разбираемся с разработкой мобильных приложений, учимся рассказывать истории и составлять PR-стратегию прямо на бесплатных занятиях",
             "18 сентября в 10:12",
             false,
+            videoContent = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             1,
@@ -20,6 +22,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb/",
             "21 Мая в 18:36",
             false,
+            videoContent = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         )
     )
 
