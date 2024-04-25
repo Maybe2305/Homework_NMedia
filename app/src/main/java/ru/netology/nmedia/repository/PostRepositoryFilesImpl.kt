@@ -1,10 +1,11 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.netology.nmedia.dto.Post
 
 class PostRepositoryFilesImpl(
     private val context: Context
@@ -49,11 +50,11 @@ class PostRepositoryFilesImpl(
         if (file.exists()) {
             context.openFileInput(FILENAME).bufferedReader().use {
                 posts = gson.fromJson(it, typeToken)
-                nextId = posts.maxOfOrNull { it.id } ?: 1
+                nextId = posts.maxOfOrNull { it.id }?.plus(1) ?: 1
             }
         } else {
             posts = defaultPosts
-            nextId = 1
+            nextId = (defaultPosts.size + 1).toLong()
         }
         data.value = posts
     }

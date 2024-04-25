@@ -1,13 +1,25 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.repository
 
-import androidx.core.net.toUri
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import ru.netology.nmedia.dto.Post
 
-class PostRepositoryInMemoryImpl : PostRepository {
+class PostRepositorySharedPrefsImpl(
+    context: Context
+) : PostRepository {
+
+    companion object {
+        private const val KEY = "posts"
+    }
+    private val gson = Gson()
+    private val prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+    private val typeToken = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private var nextId: Long = 0
-
-    private var posts = listOf(
+    private var posts = emptyList<Post>()
+    private var defaultPosts = listOf(
         Post(
             2,
             "Нетология. Университет интернет-профессий будущего",
@@ -29,6 +41,24 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     private val data = MutableLiveData(posts)
 
+    init {
+        prefs.getString(KEY, null)?.let {
+            posts = gson.fromJson(it, typeToken)
+            nextId = posts.maxOf { it.id } + 1
+        } ?: run{
+            posts = defaultPosts
+            sync()
+        }
+        data.value = posts
+    }
+
+    private fun sync() {
+        with(prefs.edit()) {
+            putString(KEY, gson.toJson(posts))
+            apply()
+        }
+    }
+
     override fun getAll(): LiveData<List<Post>> = data
 
     override fun likeById(id: Long) {
@@ -40,7 +70,10 @@ class PostRepositoryInMemoryImpl : PostRepository {
             )
         }
         data.value = posts
+        sync()
     }
+
+
 
     override fun shareById(id: Long) {
         posts = posts.map {
@@ -49,11 +82,13 @@ class PostRepositoryInMemoryImpl : PostRepository {
             )
         }
         data.value = posts
+        sync()
     }
 
     override fun removeById(id: Long) {
         posts = posts.filter { it.id != id }
         data.value = posts
+        sync()
     }
 
     override fun save(post: Post) {
@@ -70,6 +105,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             else it }
         }
         data.value = posts
+        sync()
     }
 
 }

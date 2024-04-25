@@ -1,20 +1,16 @@
 package ru.netology.nmedia.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.constraintlayout.widget.Group
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.NewPostContract
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.textNumber
 import ru.netology.nmedia.databinding.CardPostBinding
-import ru.netology.nmedia.textNumber
 
 interface OnInteractionListener {
     fun onLike(post: Post)

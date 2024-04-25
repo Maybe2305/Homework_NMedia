@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.dto
 
 import android.net.Uri
 import android.widget.TextView
