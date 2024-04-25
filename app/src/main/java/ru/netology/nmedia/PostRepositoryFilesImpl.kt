@@ -49,7 +49,7 @@ class PostRepositoryFilesImpl(
         if (file.exists()) {
             context.openFileInput(FILENAME).bufferedReader().use {
                 posts = gson.fromJson(it, typeToken)
-                nextId = posts.maxOfOrNull { it.id }?.plus(1) ?: 1
+                nextId = posts.maxOfOrNull { it.id } ?: 1
             }
         } else {
             posts = defaultPosts
