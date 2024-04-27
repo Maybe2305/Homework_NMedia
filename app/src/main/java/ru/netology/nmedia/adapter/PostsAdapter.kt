@@ -4,11 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.AppActivity
+import ru.netology.nmedia.activity.NewPostFragment
+import ru.netology.nmedia.activity.SinglePostFragment
 import ru.netology.nmedia.activity.textNumber
 import ru.netology.nmedia.databinding.CardPostBinding
 
@@ -18,6 +24,9 @@ interface OnInteractionListener {
     fun onRemove(post: Post)
     fun onShare(post: Post)
     fun playVideo(file: String)
+    fun onPostClick(post: Post)
+
+
 }
 
 
@@ -43,6 +52,11 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) = binding.apply {
+
+        content.setOnClickListener {
+            onInteractionListener.onPostClick(post)
+        }
+
         author.text = post.author
         published.text = post.published
         content.text = post.content
