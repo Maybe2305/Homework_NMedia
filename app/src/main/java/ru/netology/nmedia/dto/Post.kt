@@ -1,6 +1,8 @@
 package ru.netology.nmedia.dto
 
 import android.net.Uri
+import android.os.Parcel
+import android.os.Parcelable
 import android.widget.TextView
 
 data class Post(

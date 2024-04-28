@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.FeedFragment.Companion.textArg
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -25,8 +26,12 @@ import kotlin.reflect.KProperty
 class NewPostFragment : Fragment() {
 
     companion object {
-        var Bundle.textArg: String? by StringArg
+        private const val TEXT_KEY = "TEXT_KEY"
+        var Bundle.textArg: String?
+            set(value) = putString(TEXT_KEY,value)
+            get() = getString(TEXT_KEY)
     }
+
 
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
@@ -48,7 +53,10 @@ class NewPostFragment : Fragment() {
         binding.save.setOnClickListener {
            viewModel.changeContentAndSave(binding.content.text.toString())
             AndroidUtils.hideKeyboard(requireView())
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.action_newPostFragment_to_feedFragment)
+        }
+        binding.cancelButton.setOnClickListener {
+            findNavController().navigate(R.id.action_newPostFragment_to_feedFragment)
         }
         return binding.root
     }
