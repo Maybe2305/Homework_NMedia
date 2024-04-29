@@ -44,10 +44,6 @@ class SinglePostFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner) { postList ->
             val post = postList.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
 
-                binding.singlePost.content.text = post.content
-                binding.singlePost.ivLikes.text = textNumber(post.amountLikes)
-                binding.singlePost.ivShare.text = textNumber(post.amountShares)
-                binding.singlePost.amountWatches.text = textNumber(post.amountWatches)
 
             PostViewHolder(binding.singlePost, object : OnInteractionListener {
                 override fun onLike(post: Post) {
