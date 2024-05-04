@@ -64,6 +64,7 @@ class PostViewHolder(
         ivShare.text = textNumber(post.amountShares)
         amountWatches.text = textNumber(post.amountWatches)
 
+
         if (post.videoContent.isNotEmpty()) {
             playVideo.visibility = View.VISIBLE
             contentVideo.visibility = View.VISIBLE

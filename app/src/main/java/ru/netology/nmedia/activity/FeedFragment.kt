@@ -48,7 +48,6 @@ class FeedFragment : Fragment() {
         )
 
 
-
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -69,6 +68,7 @@ class FeedFragment : Fragment() {
             }
 
             override fun onShare(post: Post) {
+                viewModel.shareById(post.id)
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, post.content)

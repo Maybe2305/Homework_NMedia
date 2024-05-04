@@ -51,7 +51,7 @@ class NewPostFragment : Fragment() {
             ?.let(binding.content::setText)
         binding.content.requestFocus()
         binding.save.setOnClickListener {
-           viewModel.changeContentAndSave(binding.content.text.toString())
+           viewModel.changeContentAndSave(binding.content.text.toString(), binding.urlVideo.text.toString())
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigate(R.id.action_newPostFragment_to_feedFragment)
         }
