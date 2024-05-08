@@ -6,10 +6,25 @@
     <string name="content" translatable="false">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb/</string>
     <string name="amountLikes" translatable="false">1000</string>
     <string name="amountShares" translatable="false">1000</string>
-    <string name="description_post_save" translatable="false">Save</string>
-    <string name="error_empty_content" translatable="false">Text can\'t be empty</string>
+    <string name="description_post_save">Save</string>
+    <string name="error_empty_content">Text can\'t be empty</string>
     <string name="edit_message" translatable="false">Edit Message</string>
     <string name="message_before_edited" translatable="false">Message</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello">Hello World!</string>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="description_post_like">Like</string>
+    <string name="description_post_share">Share</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post Text</string>
+    <string name="menu_edit">Edit</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="add_post">Add post</string>
+    <string name="save">Save</string>
+    <string name="google_play_unavailable">Google Api Unavailable</string>
+    <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
+    <string name="channel_remote_name">Server notifications</string>
+    <string name="channel_remote_description">Notifications from remote server</string>
+    <string name="notification_user_created_new_post">Published a new post</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>
