@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -97,13 +98,23 @@ class FeedFragment : Fragment() {
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
+
+        viewModel.data.observe(viewLifecycleOwner) { model ->
+            binding.errorGroup.isVisible = model.error
+            binding.emptyState.isVisible = model.empty
+            binding.progress.isVisible = model.loading
+            adapter.submitList(model.posts)
         }
+
+
 
 
         binding.save.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
+
+        binding.retry.setOnClickListener {
+            viewModel.load()
         }
 
 

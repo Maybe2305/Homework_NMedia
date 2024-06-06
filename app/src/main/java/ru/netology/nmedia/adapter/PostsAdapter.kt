@@ -14,7 +14,7 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.AppActivity
 import ru.netology.nmedia.activity.NewPostFragment
-import ru.netology.nmedia.activity.SinglePostFragment
+//import ru.netology.nmedia.activity.SinglePostFragment
 import ru.netology.nmedia.activity.textNumber
 import ru.netology.nmedia.databinding.CardPostBinding
 
@@ -65,7 +65,7 @@ class PostViewHolder(
         amountWatches.text = textNumber(post.amountWatches)
 
 
-        if (post.videoContent.isNotEmpty()) {
+        if (post.videoContent != null) {
             playVideo.visibility = View.VISIBLE
             contentVideo.visibility = View.VISIBLE
         } else {
