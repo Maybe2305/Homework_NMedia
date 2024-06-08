@@ -35,18 +35,16 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun load() {
-        thread {
-            _data.postValue(FeedModel(loading = true))
+        _data.value = FeedModel(loading = true)
+        repository.getAllAsync(object : PostRepository.NMediaCallback<List<Post>> {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
 
-            _data.postValue(
-                try {
-                    val posts = repository.getAll()
-                    FeedModel(posts = posts, empty = posts.isEmpty())
-                } catch (e: Exception) {
-                    FeedModel(error = true)
-                }
-            )
-        }
+            override fun onError(e: Exception) {
+
+            }
+        })
     }
 
     fun edit(post: Post) {
@@ -54,24 +52,37 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun changeContentAndSave(text: String, videoUrl: String) {
-        thread {
-            edited.value?.let {
-                val updatedPost = it.copy(content = text.trim(), videoContent = videoUrl)
-                repository.save(updatedPost)
+
+        val post = edited.value?.copy(content = text, videoContent = videoUrl)?: return
+
+        repository.save(post, object : PostRepository.NMediaCallback<Post> {
+            override fun onSuccess(post: Post) {
+                _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().plus(post)))
                 _postCreated.postValue(Unit)
             }
-            edited.postValue(empty)
-        }
+
+            override fun onError(e: Exception) {
+                println("Error saving post: ${e.message}")
+            }
+        })
 
     }
-    fun likeById(id: Long) = thread {
-        val post = _data.value?.posts?.find { it.id == id } ?: empty
-        _data.postValue(_data.value?.copy(
-            posts = _data.value?.posts.orEmpty().map {
-                if (it.id == id) repository.likeById(post) else it
+    fun likeById(id: Long) {
+        val post = _data.value?.posts.orEmpty().find { it.id == id }?: return
+
+        val updatedPost = post.copy(likedByMe =!post.likedByMe, videoContent = post.videoContent?: "")
+        _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map { if (it.id == id) updatedPost else it }))
+
+        repository.likeById(updatedPost, object : PostRepository.NMediaCallback<Post> {
+            override fun onSuccess(post: Post) {
+                _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map { if (it.id == id) post else it }))
             }
-        )
-        )
+
+            override fun onError(e: Exception) {
+                println("Error liking post: ${e.message}")
+                _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map { if (it.id == id) updatedPost else it }))
+            }
+        })
     }
     fun shareById(id: Long) = thread { repository.shareById(id) }
     fun removeById(id: Long) = thread {
