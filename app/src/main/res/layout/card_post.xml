@@ -21,7 +21,7 @@
         android:contentDescription="@string/app_name" />
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/authorAvatar"
         android:lines="1"
         android:ellipsize="end"
         android:layout_width="0dp"
@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@id/barrier"
         app:layout_constraintEnd_toStartOf="@id/moreVert"
         app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintTop_toBottomOf="@id/author" />
+        app:layout_constraintTop_toBottomOf="@id/authorAvatar" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/moreVert"

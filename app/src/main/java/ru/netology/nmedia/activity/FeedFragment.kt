@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.FeedFragment.Companion.textArg
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
@@ -96,6 +97,7 @@ class FeedFragment : Fragment() {
 
 
         })
+
 
         binding.list.adapter = adapter
 

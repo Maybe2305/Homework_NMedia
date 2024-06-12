@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.AppActivity
@@ -50,19 +51,32 @@ class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+    private var index = 0
 
     fun bind(post: Post) = binding.apply {
+
 
         content.setOnClickListener {
             onInteractionListener.onPostClick(post)
         }
 
-        author.text = post.author
+        authorAvatar.text = post.authorAvatar
         published.text = post.published
         content.text = post.content
         ivLikes.text = textNumber(post.amountLikes)
         ivShare.text = textNumber(post.amountShares)
         amountWatches.text = textNumber(post.amountWatches)
+
+        val name = post.authorAvatar
+        val url = "http://10.0.2.2:9999/avatars/$name"
+
+        Glide.with(binding.avatar)
+            .load(url)
+            .placeholder(R.drawable.ic_loading_100dp)
+            .circleCrop()
+            .error(R.drawable.ic_error_100dp)
+            .timeout(30_000)
+            .into(binding.avatar)
 
 
         if (post.videoContent != null) {
