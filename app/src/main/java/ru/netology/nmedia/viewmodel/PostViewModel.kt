@@ -84,7 +84,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         })
     }
-    fun shareById(id: Long) = thread { repository.shareById(id) }
+    fun shareById(id: Long) = thread { repository.shareById(id, object : PostRepository.NMediaCallback<Post>{
+        override fun onSuccess(post: Post) {
+
+        }
+
+        override fun onError(e: Exception) {
+
+        }
+    }) }
     fun removeById(id: Long) = thread {
         val old = _data.value?.posts.orEmpty()
         _data.postValue(
@@ -94,7 +102,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             )
         )
         try {
-            repository.removeById(id)
+            repository.removeById(id, object : PostRepository.NMediaCallback<Post> {
+                override fun onSuccess(post: Post) {
+                    _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().filter { it.id!= id }))
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(_data.value?.copy(posts = old))
+                }
+            })
         } catch (e: Exception) {
             _data.postValue(_data.value?.copy(posts = old))
         }
